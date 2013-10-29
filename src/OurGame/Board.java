@@ -45,7 +45,7 @@ public class Board extends JPanel implements ActionListener {
 		if (p.getX() > 590) {
 			g2d.drawImage(img, 685 - p.nx, 0, null);
 		}
-		g2d.drawImage(p.getImage(), 75, p.getY(), null);
+		g2d.drawImage(p.getImage(), p.left, p.getY(), null);
 	}
 
 	private class AL extends KeyAdapter {
