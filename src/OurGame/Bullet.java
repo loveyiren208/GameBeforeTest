@@ -14,6 +14,10 @@ public class Bullet {
 	    img = newBullet.getImage();
 	}
 	
+	public Rectangle getBounds(){
+		return new Rectangle(x,y,44,24);
+	}
+	
 	public void move() {
 		x = x+2;	
 		if (x > 700)  {

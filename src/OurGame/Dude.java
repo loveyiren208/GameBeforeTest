@@ -1,6 +1,7 @@
 package OurGame;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -31,6 +32,9 @@ public class Dude {
 		bullets = new ArrayList<Bullet>();
 	}
 
+	public Rectangle getBounds(){
+		return new Rectangle(left,y,63,154);
+	}
 	public static ArrayList<Bullet> getBullets() {
 		return bullets;
 	}

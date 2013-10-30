@@ -17,6 +17,7 @@ public class Board extends JPanel implements ActionListener, Runnable {
 
 	Enemy en;
 	Enemy en2;
+	boolean lose = true;
 	static Font font = new Font("SanSerif",Font.BOLD,24);
 	public Board() {
 		p = new Dude();
@@ -35,9 +36,37 @@ public class Board extends JPanel implements ActionListener, Runnable {
 		
 	}
 	
+	
+	public void checkCollisions(){
+		Rectangle r1 = en.getBounds();
+		Rectangle r2 = en2.getBounds();
+		
+		ArrayList<Bullet> bullets = Dude.getBullets();
+		for (int w = 0; w < bullets.size();w++) {
+			Bullet m = bullets.get(w);
+			Rectangle m1 = m.getBounds();
+			if (r1.intersects(m1) && en.isAlive) {
+				en.isAlive = false;
+				m.visible = false;
+			} else if (r2.intersects(m1) && en2.isAlive) {
+				en2.isAlive = false;
+				m.visible = false;
+			}
+			
+		}
+		
+		Rectangle d = p.getBounds();
+		
+		if (d.intersects(r1) || d.intersects(r2)) {
+			lose = true;
+		}
+		
+	}
 
 
+	// runs every 5 milliseconds
 	public void actionPerformed(ActionEvent e) {
+		checkCollisions();
 		ArrayList<Bullet> bullets = Dude.getBullets();
 		for (int w = 0; w < bullets.size();w++) {
 			Bullet m = bullets.get(w);
@@ -50,12 +79,12 @@ public class Board extends JPanel implements ActionListener, Runnable {
 		
 		p.move();
 		
-		if (p.x > 400 && p.getdx() >0) {
-			en.move(p.getdx());
+		if (p.x > 400 ) {
+			en.move(p.getdx(),p.left);
 		}
 		
 		if (p.x >500 && p.getdx() >0){
-			en2.move(p.getdx());
+			en2.move(p.getdx(),p.left);
 		}
 		repaint();
 	}
@@ -64,6 +93,9 @@ public class Board extends JPanel implements ActionListener, Runnable {
 
 	public void paint(Graphics g) {
 
+		if(lose){
+			//System.exit(0);
+		}
 		if (p.dy == 1 && k == false) {
 			k = true;
 			animator = new Thread(this);
